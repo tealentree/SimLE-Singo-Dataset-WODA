@@ -1,13 +1,10 @@
-# Ignoruj ciężkie pliki z datasetem
 1_raw_audio/
 2_processed_audio/
 3_spectrograms/
 4_yolo_dataset/
 
-# Ignoruj pliki tymczasowe Pythona
 __pycache__/
 *.pyc
 
-# Ignoruj wirtualne środowiska Pythona!
 .venv/
 venv/
