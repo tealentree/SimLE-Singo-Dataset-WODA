@@ -5,25 +5,20 @@ import time
 
 def run_script(script_name):
     """
-    Executes a given Python script as a separate process and monitors its execution.
-    Halts the entire pipeline if a critical error occurs.
+    Wykonuje podany skrypt Python jako osobny proces. 
+    Jeśli skrypt zakończy się błędem, cały pipeline zostanie bezpiecznie zatrzymany.
     """
     print(f"\n{'='*55}")
     print(f"[STARTING STAGE] {script_name}")
     print(f"{'='*55}\n")
     
     try:
-        # sys.executable ensures we use the exact same Python interpreter currently running
-        # This is crucial when working within virtual environments (e.g., venv)
         script_path = os.path.join("scripts", script_name)
-        
-        # run() with check=True will automatically raise a CalledProcessError if the script fails
         subprocess.run([sys.executable, script_path], check=True)
         
         print(f"\n[STAGE COMPLETED] {script_name}")
         
     except subprocess.CalledProcessError as e:
-        # Safely halt the pipeline if a subprocess script fails
         print(f"\n[CRITICAL ERROR] Script '{script_name}' crashed (exit code: {e.returncode}).")
         print("Halting the pipeline to prevent the generation of corrupted or incomplete data.")
         sys.exit(1)
@@ -37,16 +32,14 @@ if __name__ == "__main__":
     print("Initializing automated Dataset Generation Pipeline...")
     start_time = time.time()
     
-    # List of scripts to execute in strict chronological order
+    # Lista skryptow do wykonania w kolejnosci
     execution_order = [
         "1_generate_audio.py",
         "2_generate_spectograms.py"
     ]
     
-    # Execute scripts sequentially
     for script in execution_order:
         run_script(script)
-        # Brief pause to ensure file system stability between heavy I/O operations
         time.sleep(1) 
         
     end_time = time.time()
