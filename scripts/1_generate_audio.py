@@ -16,7 +16,7 @@ OUTPUT_FOLDER = "2_processed_audio"
 
 SAMPLE_DURATION_SEC = 30.0
 SAMPLE_RATE = 44100
-VERSIONS_PER_CLASS = 5
+VERSIONS_PER_CLASS = 3
 
 # Definicja klas: typy i wymaganie ilości eventów dla dźwięków przerywanych
 AUDIO_CLASSES = {
@@ -104,15 +104,15 @@ def generate_dataset():
                 if config["type"] == "ciagly":
                     target_audio = audio_pool[audio_id]
                     continuous_audio = np.copy(target_audio)
-                    
+
                     while len(continuous_audio) < total_samples:
                         continuous_audio = np.concatenate((continuous_audio, continuous_audio))
                     
                     continuous_audio = continuous_audio[:total_samples]
                     
                     # Modyfikacja glosnosci dzwieku aby symulowac rozna odleglosc od zrodla
-                    volume_modifier = random.uniform(0.01, 0.7)
-                    canvas += (continuous_audio * volume_modifier)
+                    event_volume = random.uniform(0.1, 1)
+                    canvas += (continuous_audio * event_volume)
 
                 # --- LOGIKA DZWIEKOW PRZERYWANYCH ---
                 elif config["type"] == "przerywany":
@@ -123,7 +123,7 @@ def generate_dataset():
                         target_audio = audio_pool[audio_id]
                         audio_length = len(target_audio)
                         
-                        event_volume = random.uniform(0.1, 0.5)
+                        event_volume = random.uniform(0.1, 1.0)
                         modified_audio = target_audio * event_volume
                         
                         margin = segment_size - audio_length
