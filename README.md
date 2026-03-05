@@ -1,4 +1,4 @@
-# Moduł Detekcji Akustycznej (UAV) 🚁🔊
+# Moduł Detekcji Akustycznej (UAV)
 
 Projekt automatycznego generowania i przetwarzania datasetu audio (Dźwięki ciągłe i przerywane) dla drona, przygotowujący dane do uczenia modelu YOLO.
 
