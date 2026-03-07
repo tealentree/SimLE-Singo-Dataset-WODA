@@ -14,7 +14,7 @@ warnings.filterwarnings('ignore')
 INPUT_FOLDER = "1_raw_audio/targets"
 DRONE_BG_FILE = "1_raw_audio/backgrounds/drone-sound.wav"
 OUTPUT_FOLDER = "2_processed_audio"
-TXT_OUTPUT_FOLDER = "2_processed_audio/sliced"
+LABELS_OUTPUT_FOLDER = "3_spectrograms"
 
 SAMPLE_DURATION_SEC = 30.0
 SAMPLE_RATE = 44100
@@ -156,7 +156,7 @@ def generate_dataset():
     for class_name, config in AUDIO_CLASSES.items():
         source_folder = os.path.join(INPUT_FOLDER, class_name)
         target_folder = os.path.join(OUTPUT_FOLDER, class_name)
-        txt_target_folder = os.path.join(TXT_OUTPUT_FOLDER, class_name)
+        labels_target_folder = os.path.join(LABELS_OUTPUT_FOLDER, class_name)
 
         # Załaduj wszystkie dostępne próbki dźwiękowe dla tej klasy
         audio_pool = load_audio_pool(source_folder)
@@ -166,7 +166,7 @@ def generate_dataset():
             continue
 
         os.makedirs(target_folder, exist_ok=True)
-        os.makedirs(txt_target_folder, exist_ok=True)
+        os.makedirs(labels_target_folder, exist_ok=True)
         print(f"\nProcessing class: {class_name.upper()} (Type: {config['type']}, Sources found: {len(audio_pool)})")
         
         file_id = 0
@@ -253,7 +253,7 @@ def generate_dataset():
                             label_line = f"{class_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n"
                             yolo_labels.append(label_line)
 
-                    txt_filepath = os.path.join(txt_target_folder, base_filename + ".txt")
+                    txt_filepath = os.path.join(labels_target_folder, base_filename + ".txt")
                     with open(txt_filepath, 'w') as f:
                         f.writelines(yolo_labels)
 
