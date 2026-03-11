@@ -6,9 +6,9 @@ import glob
 SPLIT_RATIO = 0.20
 
 IMAGES_TRAIN_DIR = "4_yolo_dataset/images/train"
-IMAGES_TEST_DIR = "4_yolo_dataset/images/test"
+IMAGES_TEST_DIR = "4_yolo_dataset/images/val"
 LABELS_TRAIN_DIR = "4_yolo_dataset/labels/train"
-LABELS_TEST_DIR = "4_yolo_dataset/labels/test"
+LABELS_TEST_DIR = "4_yolo_dataset/labels/val"
 
 def copy_files(image_paths, dest_images_dir, dest_labels_dir):
   for img_path in image_paths:
