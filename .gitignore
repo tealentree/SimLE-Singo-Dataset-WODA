@@ -2,6 +2,7 @@
 2_processed_audio/
 3_spectrograms/
 4_yolo_dataset/
+scripts/ffmpeg/
 
 __pycache__/
 *.pyc
